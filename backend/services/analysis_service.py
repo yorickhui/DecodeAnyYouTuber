@@ -170,23 +170,41 @@ class AnalysisService:
             fallback_model = "qwen"
 
         # 5. 尝试主模型
-        try:
-            if primary_model == "qwen" and self.qwen_key:
+        primary_result = None
+        primary_error = None
+        
+        if primary_model == "qwen" and self.qwen_key:
+            try:
+                logger.info(f"Attempting primary model: {primary_model.capitalize()}")
                 return self._analyze_with_qwen(system_prompt, prompt_text, thumbnails, language)
-            elif primary_model == "gemini" and self.gemini_key:
+            except Exception as e:
+                primary_error = e
+                logger.error(f"{primary_model.capitalize()} analysis failed: {e}")
+        elif primary_model == "gemini" and self.gemini_key:
+            try:
+                logger.info(f"Attempting primary model: {primary_model.capitalize()}")
                 return self._analyze_with_gemini(system_prompt, prompt_text, thumbnails, language)
-        except Exception as e:
-            logger.error(f"{primary_model.capitalize()} analysis failed: {e}")
-            logger.info(f"Falling back to {fallback_model.capitalize()}...")
+            except Exception as e:
+                primary_error = e
+                logger.error(f"{primary_model.capitalize()} analysis failed: {e}")
+        else:
+            logger.warning(f"Primary model {primary_model.capitalize()} not available (API key missing)")
 
-        # 6. 主模型失败,尝试备用模型
-        try:
-            if fallback_model == "qwen" and self.qwen_key:
+        # 6. 主模型失败或不可用,尝试备用模型
+        logger.info(f"Falling back to {fallback_model.capitalize()}...")
+        
+        if fallback_model == "qwen" and self.qwen_key:
+            try:
                 return self._analyze_with_qwen(system_prompt, prompt_text, thumbnails, language)
-            elif fallback_model == "gemini" and self.gemini_key:
+            except Exception as e:
+                logger.error(f"{fallback_model.capitalize()} analysis failed: {e}")
+        elif fallback_model == "gemini" and self.gemini_key:
+            try:
                 return self._analyze_with_gemini(system_prompt, prompt_text, thumbnails, language)
-        except Exception as e:
-            logger.error(f"{fallback_model.capitalize()} analysis failed: {e}")
+            except Exception as e:
+                logger.error(f"{fallback_model.capitalize()} analysis failed: {e}")
+        else:
+            logger.error(f"Fallback model {fallback_model.capitalize()} not available (API key missing)")
 
         # 7. 两个模型都失败
         raise Exception("无可用 LLM 进行分析或两者均失败 (No available LLM for analysis or both failed)")
