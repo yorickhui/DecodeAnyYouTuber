@@ -11,7 +11,12 @@
 ### 1. 准备API密钥
 确保您有以下API密钥:
 - `GEMINI_API_KEY` (Google Gemini API)
-- `KIMI_API_KEY` (Moonshot AI,可选)
+- `QWEN_API_KEY` (阿里云通义千问,可选)
+
+**模型选择策略**:
+- 中文环境:优先使用通义千问 VL,Gemini 作为备用
+- 英文环境:优先使用 Gemini,通义千问 VL 作为备用
+- 两个模型都支持多模态分析(文本+图片)
 
 ---
 
@@ -37,7 +42,7 @@
 
 ```
 GEMINI_API_KEY=你的Gemini API密钥
-KIMI_API_KEY=你的Kimi API密钥(可选)
+QWEN_API_KEY=你的通义千问API密钥(可选)
 PORT=8000
 ```
 
