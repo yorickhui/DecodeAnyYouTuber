@@ -27,6 +27,11 @@
 3. 选择仓库: `yorickhui/DecodeAnyYouTuber`
 4. Railway会自动检测到Python项目
 
+**⚠️ 如果遇到"Nixpacks build failed"错误**:
+- 原因: Railway无法自动检测到backend目录中的Python项目
+- 解决: 项目已包含`nixpacks.toml`配置文件,重新部署即可
+- 操作: 在Railway中点击 **"Redeploy"** 按钮
+
 ### 1.3 配置环境变量
 在Railway项目设置中,添加以下环境变量:
 
