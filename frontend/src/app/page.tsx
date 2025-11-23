@@ -40,7 +40,7 @@ export default function Home() {
         }
       }, 3000);
 
-      const response = await fetch('http://localhost:8000/analyze_channel', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/analyze_channel`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ channel_url: url, video_limit: 3, language }),
