@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+yt-dlp
+google-generativeai
+openai
+python-dotenv
+opencv-python
+pillow
+requests
+beautifulsoup4
+youtube-transcript-api
+google-api-python-client
