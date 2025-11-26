@@ -1,3 +1,4 @@
+# Updated: 2025-11-26 - Force cache invalidation for bilibili-api-python
 fastapi
 uvicorn
 yt-dlp
