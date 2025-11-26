@@ -1,5 +1,6 @@
-fastapi
-uvicorn
+# Updated: 2025-11-26 - Force cache invalidation for bilibili-api-python
+fastapi==0.115.5
+uvicorn==0.32.1
 yt-dlp
 google-generativeai
 openai
@@ -10,3 +11,6 @@ requests
 beautifulsoup4
 youtube-transcript-api
 google-api-python-client
+bilibili-api-python==17.4.0
+aiohttp
+httpx==0.23.3
