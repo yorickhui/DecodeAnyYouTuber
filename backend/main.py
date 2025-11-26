@@ -122,7 +122,8 @@ async def analyze_channel(request: AnalyzeChannelRequest):
                 recent_videos=recent_videos,
                 detailed_videos=detailed_videos,
                 thumbnails=thumbnails,
-                language=request.language
+                language=request.language,
+                platform="youtube"  # 传递平台信息
             )
 
             # 4. Generate Report
