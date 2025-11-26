@@ -24,4 +24,8 @@ build/
 .idea/
 
 # Secrets
+.env
+*.env
+backend/.env
+frontend/.env
 mcp_config.json
