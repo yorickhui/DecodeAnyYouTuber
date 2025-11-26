@@ -30,7 +30,7 @@ try:
     from services.bilibili_service import BilibiliService
     BILIBILI_AVAILABLE = True
 except ImportError:
-    logger.warning("bilibili-api-python not installed. Bilibili analysis will be unavailable.")
+    print("WARNING: bilibili-api-python not installed. Bilibili analysis will be unavailable.")
     BilibiliService = None
     BILIBILI_AVAILABLE = False
 from services.vision_service import VisionService
