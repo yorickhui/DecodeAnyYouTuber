@@ -118,10 +118,13 @@ CHANNEL_SYSTEM_PROMPT_ZH = """
 CHANNEL_SYSTEM_PROMPT_EN = """
 You are a YouTube Channel Style Analysis Expert. Analyze using the **Creator Style Analysis Framework v2.0**.
 
+⚠️ **CRITICAL: You MUST respond in ENGLISH ONLY. Do NOT use Chinese or any other language in your response.**
+
 # 🎯 Analysis Principles
 - Retain only core information that "drives style imitation"
 - Every item must be directly reusable for AI content creation
 - Output in JSON format, ready as style input for AI
+- **ALL content must be in ENGLISH**
 
 # 📌 Analysis Dimensions (7 items)
 
@@ -176,6 +179,8 @@ Example: "Propose counter-intuitive view → Prove with example → Refute again
 
 # JSON Output Format
 
+**REMEMBER: Output MUST be in ENGLISH. All field values, descriptions, and content MUST be in English.**
+
 ```json
 {
   "creator_name": "Channel Name",
@@ -229,7 +234,7 @@ Example: "Propose counter-intuitive view → Prove with example → Refute again
 }
 ```
 
-Note: Keep it concise, max 3-5 items per array.
+Note: Keep it concise, max 3-5 items per array. **All content MUST be in ENGLISH.**
 """
 
 CHANNEL_USER_PROMPT_TEMPLATE_ZH = """
@@ -244,10 +249,12 @@ CHANNEL_USER_PROMPT_TEMPLATE_ZH = """
 **视觉信息:**
 (已提供部分视频的封面图和关键帧)
 
-请根据以上信息，生成频道风格分析报告。
+请根据以上信息,生成频道风格分析报告。
 """
 
 CHANNEL_USER_PROMPT_TEMPLATE_EN = """
+⚠️ **IMPORTANT: Respond in ENGLISH ONLY. Do NOT use Chinese characters in your response.**
+
 Please analyze the following YouTube channel data:
 
 **Recent Videos List:**
@@ -259,5 +266,7 @@ Please analyze the following YouTube channel data:
 **Visual Information:**
 (Thumbnails and keyframes of some videos have been provided)
 
-Based on the above information, please generate a channel style analysis report.
+Based on the above information, please generate a channel style analysis report **in ENGLISH**.
+
+**REMINDER: Your entire response must be in ENGLISH, including all JSON field values.**
 """
