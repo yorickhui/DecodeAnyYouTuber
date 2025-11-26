@@ -106,9 +106,6 @@ class ReportGenerator:
 
         report = f"""# 🎬 {creator_name} - {lang_dict['title_suffix']}
 
-**{lang_dict['platform']}**: {platform_name}  
-**{lang_dict['framework']}**: Creator Style Analysis Framework v2.0
-
 ---
 
 ## {lang_dict['section1']}

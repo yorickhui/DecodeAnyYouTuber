@@ -126,7 +126,8 @@ class AnalysisService:
                         recent_videos: List[Dict], 
                         detailed_videos: List[Dict],
                         thumbnails: List[str],
-                        language: str = "zh") -> Dict[str, Any]:
+                        language: str = "zh",
+                        platform: str = "youtube") -> Dict[str, Any]:
         """
         根据语言环境智能选择模型进行频道风格分析
         - 中文环境: 主模型=通义千问 VL, 备用=Gemini
@@ -150,9 +151,14 @@ class AnalysisService:
         if language == "en":
             system_prompt = CHANNEL_SYSTEM_PROMPT_EN
             user_prompt_template = CHANNEL_USER_PROMPT_TEMPLATE_EN
+            platform_display = "Bilibili" if platform == "bilibili" else "YouTube"
         else:
             system_prompt = CHANNEL_SYSTEM_PROMPT_ZH
             user_prompt_template = CHANNEL_USER_PROMPT_TEMPLATE_ZH
+            platform_display = "Bilibili" if platform == "bilibili" else "YouTube"
+
+        # 替换平台占位符
+        system_prompt = system_prompt.replace("{platform}", platform_display)
 
         prompt_text = user_prompt_template.format(
             videos_summary=videos_summary_str,

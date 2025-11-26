@@ -10,3 +10,5 @@ requests
 beautifulsoup4
 youtube-transcript-api
 google-api-python-client
+bilibili-api-python
+httpx==0.23.3

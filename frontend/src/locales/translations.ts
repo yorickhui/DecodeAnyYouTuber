@@ -1,9 +1,18 @@
 export const zh = {
-    title: "AI 频道风格分析",
+    title: "AI 创作者风格分析",
     heroTitle: "解码任意",
-    heroSubtitle: "YouTuber 的风格",
-    heroDesc: "输入频道链接，揭示其内容策略、脚本结构和爆款秘密。由多模态 AI 驱动。",
-    inputPlaceholder: "粘贴 YouTube 频道链接 (例如: https://www.youtube.com/@Geekerwan)",
+    heroSubtitle: {
+        youtube: "YouTuber 的风格",
+        bilibili: "B站UP主 的风格",
+    },
+    heroDesc: {
+        youtube: "输入频道链接，揭示其内容策略、脚本结构和爆款秘密。由多模态 AI 驱动。",
+        bilibili: "输入主页链接，揭示其内容策略、脚本结构和爆款秘密。由多模态 AI 驱动。",
+    },
+    inputPlaceholder: {
+        youtube: "粘贴 YouTube 频道链接 (例如: https://www.youtube.com/@Geekerwan)",
+        bilibili: "粘贴 B站 UP主主页链接 (例如: https://space.bilibili.com/20259914)",
+    },
     analyzeBtn: "开始分析",
     analyzingBtn: "分析中...",
     status: {
@@ -17,17 +26,26 @@ export const zh = {
         complete: "分析完成！",
         error: "出错了",
     },
-    waitMessage: "深度分析可能需要 60 秒，请耐心等待。",
+    waitMessage: "深度分析可能需要60秒，请耐心等待。",
     copy: "复制",
     copied: "JSON已复制",
 };
 
 export const en = {
-    title: "AI Channel Analysis",
+    title: "AI Creator's Style Analysis",
     heroTitle: "Decode Any",
-    heroSubtitle: "YouTuber's Style",
-    heroDesc: "Enter a channel URL to uncover their content strategy, script structure, and viral secrets. Powered by Multimodal AI.",
-    inputPlaceholder: "Paste YouTube Channel URL (e.g., https://www.youtube.com/@Geekerwan)",
+    heroSubtitle: {
+        youtube: "YouTuber's Style",
+        bilibili: "Bilibili Creator's Style",
+    },
+    heroDesc: {
+        youtube: "Enter a channel URL to uncover their content strategy, script structure, and viral secrets. Powered by Multimodal AI.",
+        bilibili: "Enter a user page URL to uncover their content strategy, script structure, and viral secrets. Powered by Multimodal AI.",
+    },
+    inputPlaceholder: {
+        youtube: "Paste YouTube Channel URL (e.g., https://www.youtube.com/@Geekerwan)",
+        bilibili: "Paste Bilibili User Page URL (e.g., https://space.bilibili.com/20259914)",
+    },
     analyzeBtn: "Analyze",
     analyzingBtn: "Analyzing...",
     status: {

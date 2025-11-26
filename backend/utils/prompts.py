@@ -62,7 +62,7 @@ CHANNEL_SYSTEM_PROMPT_ZH = """
 ```json
 {
   "creator_name": "频道名称",
-  "platform": "YouTube",
+  "platform": "{platform}",
   
   "content_positioning": {
     "core_theme": "核心定位",
@@ -179,7 +179,7 @@ Example: "Propose counter-intuitive view → Prove with example → Refute again
 ```json
 {
   "creator_name": "Channel Name",
-  "platform": "YouTube",
+  "platform": "{platform}",
   
   "content_positioning": {
     "core_theme": "Core Theme",

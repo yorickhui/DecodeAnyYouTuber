@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ArrowRight, Youtube, Loader2, Sparkles } from 'lucide-react';
+import { BilibiliIcon } from '@/components/BilibiliIcon';
 import ReportViewer from '@/components/ReportViewer';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Home() {
   const { t, language } = useLanguage();
+  const [platform, setPlatform] = useState<'youtube' | 'bilibili'>('youtube');
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<string | null>(null);
@@ -40,10 +43,14 @@ export default function Home() {
         }
       }, 3000);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/analyze_channel`, {
+      const apiEndpoint = platform === 'youtube'
+        ? '/analyze_channel'
+        : '/analyze_bilibili_creator';
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}${apiEndpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ channel_url: url, video_limit: 3, language }),
+        body: JSON.stringify({ channel_url: url, video_limit: 3, language, platform }),
       });
 
       clearInterval(interval);
@@ -81,23 +88,56 @@ export default function Home() {
 
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           {t.heroTitle} <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">{t.heroSubtitle}</span>
+          <span className={`text-transparent bg-clip-text bg-gradient-to-r ${platform === 'youtube'
+            ? 'from-red-500 to-purple-600'
+            : 'from-[#01AEEC] to-[#FB7299]'
+            }`}>
+            {typeof t.heroSubtitle === 'string' ? t.heroSubtitle : t.heroSubtitle[platform]}
+          </span>
         </h1>
 
         <p className="text-lg text-gray-400 max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200">
-          {t.heroDesc}
+          {typeof t.heroDesc === 'string' ? t.heroDesc : t.heroDesc[platform]}
         </p>
+      </div>
+
+      {/* Platform Selector */}
+      <div className="w-full max-w-2xl mb-6 flex justify-center gap-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-150">
+        <button
+          onClick={() => setPlatform('youtube')}
+          className={`w-36 px-6 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${platform === 'youtube'
+            ? 'bg-white text-black shadow-lg'
+            : 'glass text-gray-400 hover:text-white'
+            }`}
+        >
+          <Youtube size={20} />
+          YouTube
+        </button>
+        <button
+          onClick={() => setPlatform('bilibili')}
+          className={`w-36 px-6 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${platform === 'bilibili'
+            ? 'bg-white text-black shadow-lg'
+            : 'glass text-gray-400 hover:text-white'
+            }`}
+        >
+          <BilibiliIcon size={20} />
+          Bilibili
+        </button>
       </div>
 
       {/* Input Section */}
       <div className="w-full max-w-2xl mb-12 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-300">
         <div className="flex gap-2 p-2 glass-card rounded-xl transition-all focus-within:ring-2 focus-within:ring-purple-500/50">
           <div className="flex items-center pl-4 text-gray-500">
-            <Youtube size={24} />
+            {platform === 'youtube' ? (
+              <Youtube size={24} />
+            ) : (
+              <BilibiliIcon size={24} />
+            )}
           </div>
           <input
             type="text"
-            placeholder={t.inputPlaceholder}
+            placeholder={typeof t.inputPlaceholder === 'string' ? t.inputPlaceholder : t.inputPlaceholder[platform]}
             className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-500 p-4"
             value={url}
             onChange={(e) => setUrl(e.target.value)}

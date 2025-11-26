@@ -46,10 +46,14 @@ QWEN_API_KEY=你的通义千问API密钥(可选)
 PORT=8000
 ```
 
-**重要提示**:
+**⚠️ 重要提示**:
 - 点击项目 → **Variables** 标签页
 - 点击 **"New Variable"** 添加每个变量
-- 添加完成后点击 **"Deploy"**
+- **添加或修改变量后,必须点击 "Apply X changes" 按钮**
+- 应用更改后会自动触发重新部署,或手动点击 **"Deploy"**
+
+> [!CAUTION]
+> **常见错误**: 添加或修改环境变量后,如果没有点击 **"Apply changes"** 按钮,更改不会生效!这会导致应用运行时仍然使用旧的配置或缺少密钥,产生 "API key missing" 等错误。务必确认所有更改都已应用。
 
 ### 1.4 获取后端URL
 部署成功后:
@@ -252,7 +256,36 @@ Railway免费版有请求时长限制,考虑:
 
 ### 🔥 关键问题与解决方案
 
-#### 1. Railway Python环境配置问题
+#### 1. Railway环境变量配置陷阱 ⚠️ 最常见!
+
+**遇到的问题**:
+- 在Railway Variables中添加或修改了环境变量(如 `GEMINI_API_KEY`, `QWEN_API_KEY`)
+- 运行时日志显示 `API key missing` 或 `No available LLM for analysis`
+- 本地环境测试正常,生产环境失败
+
+**问题原因**:
+❌ **添加或修改环境变量后,没有点击 "Apply X changes" 按钮**
+
+Railway的环境变量修改不会自动应用!即使您已经输入了变量值,如果界面上显示 "Apply X changes",说明更改还在待定状态,**必须点击该按钮才能真正生效**。
+
+**正确操作流程**:
+1. Railway项目 → **Variables** 标签
+2. 添加或修改变量 (例如: `GEMINI_API_KEY=AIza...`)
+3. ✅ **点击 "Apply X changes" 按钮** (X是更改的数量)
+4. 等待自动重新部署完成,或手动点击 **Redeploy**
+5. 验证部署日志中的时间戳晚于变量修改时间
+
+**如何验证环境变量已生效**:
+- 查看 Variables 页面,不应该再显示 "Apply changes" 按钮
+- 查看 Deployments 页面,最新部署时间应该晚于变量修改时间
+- 运行时日志应该不再显示 "API key missing"
+
+**经验教训**:
+> 💡 **这是最容易被忽略的步骤!** 很多部署失败案例都是因为环境变量更改后忘记点击 "Apply" 按钮。建议养成习惯:每次修改变量后,务必检查是否有 "Apply changes" 按钮,如果有就必须点击!
+
+---
+
+#### 2. Railway Python环境配置问题
 
 **遇到的问题**:
 - Nixpacks无法自动检测backend子目录中的Python项目
@@ -469,6 +502,7 @@ NEXT_PUBLIC_API_URL=https://backend.railway.app  # ✅ 包含完整协议
 
 | 错误信息 | 原因 | 解决方案 |
 |---------|------|---------|
+| `API key missing` 或 `No available LLM` | Railway环境变量未Apply | 点击"Apply X changes"按钮 |
 | `Nixpacks build failed` | 未检测到Python项目 | requirements.txt放根目录 |
 | `libGL.so.1: cannot open` | OpenCV缺少GUI库 | 使用opencv-python-headless |
 | `CORS policy` | 域名不在白名单 | 使用allow_origin_regex |
