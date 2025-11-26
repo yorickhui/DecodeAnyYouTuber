@@ -26,7 +26,13 @@ from pydantic import BaseModel
 from typing import Optional, List
 
 from services.youtube_service import YouTubeService
-from services.bilibili_service import BilibiliService
+try:
+    from services.bilibili_service import BilibiliService
+    BILIBILI_AVAILABLE = True
+except ImportError:
+    logger.warning("bilibili-api-python not installed. Bilibili analysis will be unavailable.")
+    BilibiliService = None
+    BILIBILI_AVAILABLE = False
 from services.vision_service import VisionService
 from services.analysis_service import AnalysisService
 from services.report_generator import ReportGenerator
@@ -48,7 +54,7 @@ app.add_middleware(
 
 # Initialize Services
 youtube_service = YouTubeService()
-bilibili_service = BilibiliService()
+bilibili_service = BilibiliService() if BILIBILI_AVAILABLE else None
 vision_service = VisionService()
 analysis_service = AnalysisService()
 report_generator = ReportGenerator()
@@ -143,6 +149,13 @@ async def analyze_bilibili_creator(request: AnalyzeChannelRequest):
     分析B站UP主风格
     功能与analyze_channel完全一致,只是使用bilibili_service作为数据源
     """
+    # Check if Bilibili service is available
+    if not BILIBILI_AVAILABLE or bilibili_service is None:
+        raise HTTPException(
+            status_code=503, 
+            detail="Bilibili analysis is currently unavailable. The bilibili-api-python package is not installed."
+        )
+    
     try:
         try:
             # 1. Fetch Recent Videos List from Bilibili
