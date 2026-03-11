@@ -1,19 +1,18 @@
-# 使用Python 3.11官方镜像
-FROM python:3.11-slim
+# 使用Python 3.11官方镜像（基于Debian bookworm稳定版）
+FROM python:3.11-slim-bookworm
 
 # 设置时区和环境变量
 ENV TZ=Asia/Shanghai \
     PYTHONUNBUFFERED=1 \
     PORT=8000
 
-# 安装系统依赖（来自Aptfile）
+# 安装系统依赖（精简版，opencv-python-headless不需要图形库）
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
-    libgl1-mesa-glx \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
-    libxrender-dev \
+    libxrender1 \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/* \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
