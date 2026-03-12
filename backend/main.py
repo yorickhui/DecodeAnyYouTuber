@@ -46,7 +46,7 @@ app = FastAPI(title="YouTube Channel Style Analyzer API")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"https://.*\.vercel\.app|http://localhost:\d+|https://decode-any-you-tuber\.vercel\.app",
+    allow_origin_regex=r"https://.*\.vercel\.app|http://localhost:\d+|https://decode-any-you-tuber\.vercel\.app|https://www\.copyyou\.ai",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
